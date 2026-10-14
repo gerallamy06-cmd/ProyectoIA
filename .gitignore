@@ -1,0 +1,29 @@
+# Data
+data/raw/
+data/processed/
+*.tif
+*.geojson
+!data/aoi/
+
+# SkySense
+skysense_weights/
+SkySensePlusPlus-main/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.venv/
+conda_env/
+
+# Outputs
+outputs/predictions/
+outputs/metrics/*.csv
+!outputs/figures/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

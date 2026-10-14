@@ -1,0 +1,106 @@
+# Configuración central ProyectoIA - SkySense Flood Detection Barranquilla
+
+project:
+  name: "SkySense-Flood-Barranquilla"
+  description: "Detección de cambios en inundaciones barrios Don Juan y El Salado 2020-2025"
+  author: "[Tu Nombre]"
+  email: "[tu.email@uninorte.edu.co]"
+  github: "https://github.com/gerallamy06-cmd/ProyectoIA"
+
+# Área de Interés (AOI)
+aoi:
+  barrios: ["Don Juan", "El Salado"]
+  city: "Barranquilla"
+  country: "Colombia"
+  geojson_path: "data/aoi/barranquilla_flood_aoi.geojson"
+  buffered_geojson_path: "data/aoi/barranquilla_flood_aoi_buffered.geojson"
+  crs: "EPSG:4326"
+
+# Período temporal
+temporal:
+  start_date: "2020-01-01"
+  end_date: "2025-12-31"
+  events_of_interest:
+    - name: "La Niña 2020-2022"
+      period: "2020-09 to 2022-03"
+    - name: "Huracán Iota"
+      period: "2020-11"
+    - name: "Lluvias extremas 2022"
+      period: "2022-05 to 2022-06"
+    - name: "Lluvias extremas 2024"
+      period: "2024-04 to 2024-05"
+
+# Google Earth Engine
+gee:
+  project_id: "TU_GEE_PROJECT_ID_AQUI"  # CAMBIAR: Tu Google Cloud Project ID
+  cloud_threshold: 30  # % nubes máximo S2
+  export_scale: 10  # metros
+  export_crs: "EPSG:4326"
+
+# Datos Sentinel
+sentinel:
+  s2:
+    collection: "COPERNICUS/S2_SR_HARMONIZED"
+    bands: ["B2", "B3", "B4", "B8", "B11", "B12", "QA60"]
+    resolution: 10
+  s1:
+    collection: "COPERNICUS/S1_GRD"
+    polarizations: ["VV", "VH"]
+    instrument_mode: "IW"
+    resolution: 10
+
+# Procesamiento
+processing:
+  tile_size: 512
+  overlap: 64
+  stride: 448
+  normalization: "percentile_2_98"
+  s1_filter: "lee_5x5"
+  s1_terrain_correction: true
+  co_registration: true
+
+# Etiquetado (Ground Truth)
+labeling:
+  indices: ["NDWI", "MNDWI", "AWEI_sh"]
+  consensus_threshold: 2  # mínimo índices de acuerdo
+  threshold_method: "otsu"
+  morph_open_kernel: 3
+  morph_close_kernel: 5
+  validation_split: 0.15
+
+# Splits
+splits:
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  stratify_by: "tile_key"  # evitar leakage espacial
+  random_state: 42
+
+# Modelo SkySense++
+skysense:
+  config_path: "../SkySensePlusPlus-main/configs/eval_skysense_pp_barranquilla.yml"
+  weights_path: "../SkySensePlusPlus-main/pretrain/skysensepp_release.ckpt"
+  base_config: "../SkySensePlusPlus-main/configs/eval_skysense_pp_flood3i.yml"
+  device: "cuda"
+  seq_len: 1
+  num_shot: 1
+
+# Evaluación
+evaluation:
+  metrics: ["iou", "f1", "precision", "recall", "accuracy"]
+  disaggregate_by: ["barrio", "year", "sensor", "event"]
+  bootstrap_ci: true
+  n_bootstrap: 1000
+  confidence_level: 0.95
+
+# Rutas de salida
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  labels: "data/processed/labels"
+  splits: "data/splits"
+  predictions: "outputs/predictions"
+  metrics: "outputs/metrics"
+  figures: "outputs/figures"
+  model_card: "MODEL_CARD.md"
+  dataset_card: "DATASET_CARD.md"
