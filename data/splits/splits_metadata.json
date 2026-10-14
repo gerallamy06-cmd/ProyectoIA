@@ -1,0 +1,11 @@
+{
+  "tile_size": 512,
+  "overlap": 64,
+  "stride": 448,
+  "splits": {
+    "train": 14,
+    "val": 3,
+    "test": 4
+  },
+  "total_samples": 21
+}

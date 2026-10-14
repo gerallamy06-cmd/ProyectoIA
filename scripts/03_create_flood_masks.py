@@ -182,15 +182,18 @@ def process_tile_pair(s2_path_t1, s2_path_t2, s1_path_t1=None, s1_path_t2=None, 
 def find_tile_pairs(s2_dir_pattern):
     """Encontrar pares temporales de tiles S2 (mismo tile, fechas consecutivas)"""
     files = sorted(glob.glob(s2_dir_pattern))
-    # Agrupar por tile (asumir naming: S2_YYYYMMDD_tile_XX.tif)
+    # Agrupar por tile (naming: S2_Barranquilla_YYYY-MM-DD_N.tif)
     tiles_dict = {}
     for f in files:
         fname = os.path.basename(f)
         # Extraer tile_id y fecha
-        parts = fname.replace('.tif', '').split('_')
-        if len(parts) >= 3:
-            date_str = parts[1]
-            tile_id = '_'.join(parts[2:])
+        # Naming: S2_Barranquilla_YYYY-MM-DD_N.tif
+        fname_no_ext = fname.replace('.tif', '')
+        parts = fname_no_ext.split('_')
+        if len(parts) >= 4:
+            # parts[0]='S2', parts[1]='Barranquilla', parts[2]='YYYY-MM-DD', parts[3]='N'
+            date_str = parts[2].replace('-', '')  # Convert YYYY-MM-DD to YYYYMMDD
+            tile_id = parts[3]  # The tile number (0, 1, etc.)
             if tile_id not in tiles_dict:
                 tiles_dict[tile_id] = []
             tiles_dict[tile_id].append((date_str, f))

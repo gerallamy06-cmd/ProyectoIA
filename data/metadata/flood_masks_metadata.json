@@ -1,0 +1,222 @@
+[
+  {
+    "tile": "S2_Barranquilla_2020-01-02_0",
+    "s2_t1": "S2_Barranquilla_2020-01-02_0.tif",
+    "s2_t2": "S2_Barranquilla_2025-12-26_0.tif",
+    "flood_pixels": 9783,
+    "total_pixels": 410097,
+    "flood_ratio": 0.023855331787357624,
+    "water_t1_pixels": 65164,
+    "water_t2_pixels": 66056,
+    "pair_index": 0
+  },
+  {
+    "tile": "S2_Barranquilla_2020-01-07_1",
+    "s2_t1": "S2_Barranquilla_2020-01-07_1.tif",
+    "s2_t2": "S2_Barranquilla_2025-12-21_1.tif",
+    "flood_pixels": 9115,
+    "total_pixels": 410097,
+    "flood_ratio": 0.022226448864536928,
+    "water_t1_pixels": 65261,
+    "water_t2_pixels": 64999,
+    "pair_index": 1
+  },
+  {
+    "tile": "S2_Barranquilla_2020-01-12_2",
+    "s2_t1": "S2_Barranquilla_2020-01-12_2.tif",
+    "s2_t2": "S2_Barranquilla_2025-12-16_2.tif",
+    "flood_pixels": 14951,
+    "total_pixels": 410097,
+    "flood_ratio": 0.036457228411814764,
+    "water_t1_pixels": 64090,
+    "water_t2_pixels": 70903,
+    "pair_index": 2
+  },
+  {
+    "tile": "S2_Barranquilla_2020-01-17_3",
+    "s2_t1": "S2_Barranquilla_2020-01-17_3.tif",
+    "s2_t2": "S2_Barranquilla_2025-12-11_3.tif",
+    "flood_pixels": 8816,
+    "total_pixels": 410097,
+    "flood_ratio": 0.021497353065250416,
+    "water_t1_pixels": 65419,
+    "water_t2_pixels": 64812,
+    "pair_index": 3
+  },
+  {
+    "tile": "S2_Barranquilla_2020-01-27_4",
+    "s2_t1": "S2_Barranquilla_2020-01-27_4.tif",
+    "s2_t2": "S2_Barranquilla_2025-12-06_4.tif",
+    "flood_pixels": 145289,
+    "total_pixels": 410097,
+    "flood_ratio": 0.35427959726601266,
+    "water_t1_pixels": 94606,
+    "water_t2_pixels": 219306,
+    "pair_index": 4
+  },
+  {
+    "tile": "S2_Barranquilla_2020-02-01_5",
+    "s2_t1": "S2_Barranquilla_2020-02-01_5.tif",
+    "s2_t2": "S2_Barranquilla_2025-11-26_5.tif",
+    "flood_pixels": 10242,
+    "total_pixels": 410097,
+    "flood_ratio": 0.02497457918492454,
+    "water_t1_pixels": 63674,
+    "water_t2_pixels": 65714,
+    "pair_index": 5
+  },
+  {
+    "tile": "S2_Barranquilla_2020-02-06_6",
+    "s2_t1": "S2_Barranquilla_2020-02-06_6.tif",
+    "s2_t2": "S2_Barranquilla_2025-11-06_6.tif",
+    "flood_pixels": 23841,
+    "total_pixels": 410097,
+    "flood_ratio": 0.05813502659126987,
+    "water_t1_pixels": 63428,
+    "water_t2_pixels": 79340,
+    "pair_index": 6
+  },
+  {
+    "tile": "S2_Barranquilla_2020-02-11_7",
+    "s2_t1": "S2_Barranquilla_2020-02-11_7.tif",
+    "s2_t2": "S2_Barranquilla_2025-11-01_7.tif",
+    "flood_pixels": 40195,
+    "total_pixels": 410097,
+    "flood_ratio": 0.09801339683050596,
+    "water_t1_pixels": 64032,
+    "water_t2_pixels": 94896,
+    "pair_index": 7
+  },
+  {
+    "tile": "S2_Barranquilla_2020-02-16_8",
+    "s2_t1": "S2_Barranquilla_2020-02-16_8.tif",
+    "s2_t2": "S2_Barranquilla_2025-10-07_8.tif",
+    "flood_pixels": 75111,
+    "total_pixels": 410097,
+    "flood_ratio": 0.18315422936524772,
+    "water_t1_pixels": 65472,
+    "water_t2_pixels": 130148,
+    "pair_index": 8
+  },
+  {
+    "tile": "S2_Barranquilla_2020-02-21_9",
+    "s2_t1": "S2_Barranquilla_2020-02-21_9.tif",
+    "s2_t2": "S2_Barranquilla_2025-09-27_9.tif",
+    "flood_pixels": 274803,
+    "total_pixels": 410097,
+    "flood_ratio": 0.6700926853890665,
+    "water_t1_pixels": 72879,
+    "water_t2_pixels": 345876,
+    "pair_index": 9
+  },
+  {
+    "tile": "S2_Barranquilla_2020-02-26_10",
+    "s2_t1": "S2_Barranquilla_2020-02-26_10.tif",
+    "s2_t2": "S2_Barranquilla_2025-09-14_10.tif",
+    "flood_pixels": 10639,
+    "total_pixels": 410097,
+    "flood_ratio": 0.025942642838157802,
+    "water_t1_pixels": 216956,
+    "water_t2_pixels": 73276,
+    "pair_index": 10
+  },
+  {
+    "tile": "S2_Barranquilla_2020-03-02_11",
+    "s2_t1": "S2_Barranquilla_2020-03-02_11.tif",
+    "s2_t2": "S2_Barranquilla_2025-08-28_11.tif",
+    "flood_pixels": 34445,
+    "total_pixels": 410097,
+    "flood_ratio": 0.08399232376730384,
+    "water_t1_pixels": 65547,
+    "water_t2_pixels": 92261,
+    "pair_index": 11
+  },
+  {
+    "tile": "S2_Barranquilla_2020-03-07_12",
+    "s2_t1": "S2_Barranquilla_2020-03-07_12.tif",
+    "s2_t2": "S2_Barranquilla_2025-08-05_12.tif",
+    "flood_pixels": 138274,
+    "total_pixels": 410097,
+    "flood_ratio": 0.3371738881289061,
+    "water_t1_pixels": 175736,
+    "water_t2_pixels": 276376,
+    "pair_index": 12
+  },
+  {
+    "tile": "S2_Barranquilla_2020-03-12_13",
+    "s2_t1": "S2_Barranquilla_2020-03-12_13.tif",
+    "s2_t2": "S2_Barranquilla_2025-07-24_13.tif",
+    "flood_pixels": 22666,
+    "total_pixels": 410097,
+    "flood_ratio": 0.05526985079139813,
+    "water_t1_pixels": 67008,
+    "water_t2_pixels": 80538,
+    "pair_index": 13
+  },
+  {
+    "tile": "S2_Barranquilla_2020-03-17_14",
+    "s2_t1": "S2_Barranquilla_2020-03-17_14.tif",
+    "s2_t2": "S2_Barranquilla_2025-07-19_14.tif",
+    "flood_pixels": 59519,
+    "total_pixels": 410097,
+    "flood_ratio": 0.1451339561128221,
+    "water_t1_pixels": 82887,
+    "water_t2_pixels": 119154,
+    "pair_index": 14
+  },
+  {
+    "tile": "S2_Barranquilla_2020-03-22_15",
+    "s2_t1": "S2_Barranquilla_2020-03-22_15.tif",
+    "s2_t2": "S2_Barranquilla_2025-07-16_15.tif",
+    "flood_pixels": 24686,
+    "total_pixels": 410097,
+    "flood_ratio": 0.060195514719688266,
+    "water_t1_pixels": 71647,
+    "water_t2_pixels": 84659,
+    "pair_index": 15
+  },
+  {
+    "tile": "S2_Barranquilla_2020-03-27_16",
+    "s2_t1": "S2_Barranquilla_2020-03-27_16.tif",
+    "s2_t2": "S2_Barranquilla_2025-07-09_16.tif",
+    "flood_pixels": 94050,
+    "total_pixels": 410097,
+    "flood_ratio": 0.22933598636420163,
+    "water_t1_pixels": 70535,
+    "water_t2_pixels": 155220,
+    "pair_index": 16
+  },
+  {
+    "tile": "S2_Barranquilla_2020-04-06_17",
+    "s2_t1": "S2_Barranquilla_2020-04-06_17.tif",
+    "s2_t2": "S2_Barranquilla_2025-06-29_17.tif",
+    "flood_pixels": 27358,
+    "total_pixels": 410097,
+    "flood_ratio": 0.06671104641097106,
+    "water_t1_pixels": 88723,
+    "water_t2_pixels": 91745,
+    "pair_index": 17
+  },
+  {
+    "tile": "S2_Barranquilla_2020-04-16_18",
+    "s2_t1": "S2_Barranquilla_2020-04-16_18.tif",
+    "s2_t2": "S2_Barranquilla_2025-06-26_18.tif",
+    "flood_pixels": 106065,
+    "total_pixels": 410097,
+    "flood_ratio": 0.2586339329475709,
+    "water_t1_pixels": 85198,
+    "water_t2_pixels": 168540,
+    "pair_index": 18
+  },
+  {
+    "tile": "S2_Barranquilla_2020-04-21_19",
+    "s2_t1": "S2_Barranquilla_2020-04-21_19.tif",
+    "s2_t2": "S2_Barranquilla_2025-06-24_19.tif",
+    "flood_pixels": 8899,
+    "total_pixels": 410097,
+    "flood_ratio": 0.021699744206858378,
+    "water_t1_pixels": 259854,
+    "water_t2_pixels": 80193,
+    "pair_index": 19
+  }
+]

@@ -94,38 +94,44 @@ Este modelo demuestra la capacidad de transferencia de un foundation model multi
 - **Framework**: PyTorch + antmmf + mmsegmentation
 
 ## Análisis Cuantitativo (Quantitative Analyses - Mitchell et al. 2019)
-> **NOTA**: Los valores abajo son PLACEHOLDERS. Reemplazar con resultados reales tras ejecutar `scripts/07_compute_metrics.py`.
+> **NOTA IMPORTANTE**: La inferencia del modelo no pudo ejecutarse completamente debido a la falta de GPU NVIDIA/CUDA en el entorno de ejecución. El modelo SkySense++ requiere CUDA para inferencia. La pipeline de datos está completa y validada (descarga Sentinel-1/2, máscaras de inundación, tiling, splits). Las métricas de modelo abajo son **PLACEHOLDERS** y deben completarse al ejecutar en entorno con GPU.
 
-### Resultados Unitarios (Unitary Results)
+### Estadísticas del Dataset de Evaluación (Real)
+| Métrica | Valor |
+|---------|-------|
+| **Tiles de evaluación (test)** | 4 |
+| **Tiles totales procesados** | 20 (flood masks) + 74 (S2) + 20 (S1) |
+| **Ratio inundación global (GT)** | 13.88% |
+| **Píxeles inundación totales** | 1,138,747 |
+| **Años cubiertos** | 2020-2025 (6 años) |
+| **Imágenes S2 descargadas** | 75 |
+| **Imágenes S1 descargadas** | 20 |
+
+### Resultados Unitarios (Unitary Results) - PLACEHOLDERS
 | Factor | IoU (Inundación) | F1-Score | Precision | Recall | N muestras |
 |--------|------------------|----------|-----------|--------|------------|
-| **Global** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **Don Juan** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **El Salado** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **2020** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **2021** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **2022** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **2023** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **2024** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **2025** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **Sentinel-1** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **Sentinel-2** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
-| **Fusión S1+S2** | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] | [XXX] |
+| **Global** | [PENDIENTE - requiere GPU] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | 4 |
+| **Don Juan** | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [XXX] |
+| **El Salado** | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [XXX] |
+| **2020-2025** | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [XXX] |
+| **Sentinel-1** | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [XXX] |
+| **Sentinel-2** | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [XXX] |
+| **Fusión S1+S2** | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [XXX] |
 
-### Resultados Interseccionales (Intersectional Results)
+### Resultados Interseccionales (Intersectional Results) - PENDIENTES
 | Barrio × Año | IoU | F1 | Precision | Recall |
 |--------------|-----|-----|-----------|--------|
-| Don Juan × 2020 | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] |
-| Don Juan × 2022 (La Niña) | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] |
-| El Salado × 2020 | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] |
-| El Salado × 2022 (La Niña) | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] |
-| Don Juan × S1 | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] |
-| El Salado × S2 | [XX.XX] | [XX.XX] | [XX.XX] | [XX.XX] |
+| Don Juan × 2020 | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] |
+| Don Juan × 2022 (La Niña) | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] |
+| El Salado × 2020 | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] |
+| El Salado × 2022 (La Niña) | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] | [PENDIENTE] |
 
 ### Intervalos de Confianza
-- **Método**: Bootstrap resampling (1000 iteraciones)
+- **Método**: Bootstrap resampling (1000 iteraciones) - pendiente
 - **Nivel**: 95%
-- **Reportar**: [IoU] ± [IC95%] para cada factor
+- **Reportar**: [IoU] ± [IC95%] para cada factor - pendiente ejecución GPU
+
+> **Para completar métricas**: Ejecutar `scripts/07_compute_metrics.py` en entorno con GPU NVIDIA (CUDA 11.7+) tras correr inferencia con `scripts/06_run_inference.py`.
 
 ## Consideraciones Éticas (Ethical Considerations)
 - **Datos sensibles**: No aplica (imágenes satelitales públicas Copernicus/ESA)

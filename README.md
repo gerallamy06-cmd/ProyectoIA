@@ -8,17 +8,33 @@ Este proyecto evalúa la capacidad de transferencia de un foundation model multi
 - **Model Card**: [MODEL_CARD.md](./MODEL_CARD.md)
 - **Dataset Card**: [DATASET_CARD.md](./DATASET_CARD.md)
 
-## 🎯 Resultados Principales (Pendientes - ejecutar pipeline completo)
-| Métrica | Don Juan | El Salado | Global |
-|---------|----------|-----------|--------|
-| IoU (Inundación) | [XX.XX] | [XX.XX] | [XX.XX] |
-| F1-Score | [XX.XX] | [XX.XX] | [XX.XX] |
-| Precision | [XX.XX] | [XX.XX] | [XX.XX] |
-| Recall | [XX.XX] | [XX.XX] | [XX.XX] |
+## 🎯 Estado del Proyecto
+| Componente | Estado |
+|------------|--------|
+| ✅ AOI (Don Juan + El Salado) | Completado |
+| ✅ Descarga Sentinel-1/2 (GEE) | 75 S2 + 20 S1 imágenes (2020-2025) |
+| ✅ Máscaras de inundación (NDWI/MNDWI/AWEI) | 20 tiles, ratio 13.88% |
+| ✅ Tiling 512×512 + splits train/val/test | 14 train / 3 val / 4 test |
+| ✅ Entorno SkySense++ (conda + pesos) | Configurado |
+| ⚠️ Inferencia 1-shot | **Pendiente - requiere GPU NVIDIA/CUDA** |
+| ⚠️ Métricas de evaluación | **Pendiente - requiere GPU** |
 
-> **Nota**: Los valores se completarán tras ejecutar `scripts/07_compute_metrics.py` con la inferencia de SkySense++.
+> **Nota**: La pipeline de datos está completa y validada. La inferencia del modelo SkySense++ requiere GPU NVIDIA con CUDA 11.7+, no disponible en el entorno actual. Las métricas en [MODEL_CARD.md](./MODEL_CARD.md) están marcadas como pendientes.
 
-## 🗂️ Estructura del Proyecto
+## 📊 Datos Descargados (Real)
+| Métrica | Valor |
+|---------|-------|
+| Imágenes Sentinel-2 | 75 (2020-2025) |
+| Imágenes Sentinel-1 | 20 (2020-2025) |
+| Máscaras de inundación | 20 tiles |
+| Ratio inundación (GT) | 13.88% |
+| Píxeles inundación totales | 1,138,747 |
+| Período temporal | 2020-01-02 a 2025-12-26 |
+| Splits train/val/test | 14 / 3 / 4 |
+
+## 📄 Fichas del Proyecto
+- **Model Card**: [MODEL_CARD.md](./MODEL_CARD.md)
+- **Dataset Card**: [DATASET_CARD.md](./DATASET_CARD.md)
 ```
 ProyectoIA/
 ├── MODEL_CARD.md              # Ficha del modelo (Mitchell et al. 2019 + HF template)

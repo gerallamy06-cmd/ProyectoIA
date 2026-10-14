@@ -59,6 +59,22 @@ Diseñado para evaluación de foundation models de Earth Observation (SkySense++
 - Modelado hidrológico detallado (requiere DEM de alta resolución, drenaje)
 - Zonas fuera de los 2 barrios definidos sin validación adicional
 
+## Estadísticas del Dataset (Real - Descargado y Procesado)
+| Métrica | Valor |
+|---------|-------|
+| **Imágenes Sentinel-2 descargadas** | 75 (2020-2025) |
+| **Imágenes Sentinel-1 descargadas** | 20 (2020-2025) |
+| **Máscaras de inundación generadas** | 20 tiles |
+| **Tiles de evaluación (test split)** | 4 |
+| **Tiles de entrenamiento (train split)** | 14 |
+| **Tiles de validación (val split)** | 3 |
+| **Ratio inundación global (GT)** | 13.88% |
+| **Píxeles inundación totales (GT)** | 1,138,747 |
+| **Período temporal** | 2020-01-02 a 2025-12-26 |
+| **Cobertura nubes S2 (filtrada)** | <30% |
+| **Resolución espacial** | 10m (S2), 10m (S1) |
+| **CRS** | EPSG:4326 |
+
 ## Estructura del Dataset (Dataset Structure)
 ```
 data/

@@ -13,6 +13,7 @@ from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
 # Configuración
+PROCESSED_DIR = "data/processed"
 FLOOD_MASKS_DIR = "data/processed/labels"
 S1_DIR = "data/processed/sentinel1"
 S2_DIR = "data/processed/sentinel2"
@@ -75,28 +76,24 @@ def extract_tiles(image_path, output_dir, prefix, tile_size=TILE_SIZE, stride=ST
         
         return tile_paths
 
-def match_s1_s2_tiles(s1_tiles, s2_tiles, flood_tiles, max_time_diff_days=7):
+def match_s1_s2_tiles(s1_tiles, s2_tiles, flood_tiles):
     """
-    Emparejar tiles S1 y S2 por ubicación espacial y proximidad temporal.
-    Retorna lista de samples para SkySense++.
+    Emparejar cada flood tile con un tile S1 y S2 disponible.
     """
-    # Por simplicidad, asumir naming consistente: tile_YYY_XXX.tif
     matched = []
     
-    # Crear dicts por coordenadas de tile
-    s1_dict = {t['path'].replace('S1_', ''): t for t in s1_tiles}
-    s2_dict = {t['path'].replace('S2_', ''): t for t in s2_tiles}
-    flood_dict = {t['path'].replace('flood_', ''): t for t in flood_tiles}
+    if not s1_tiles or not s2_tiles:
+        return matched
     
-    # Encontrar intersección
-    common_keys = set(s1_dict.keys()) & set(s2_dict.keys()) & set(flood_dict.keys())
+    s1_tile = s1_tiles[0]['path']
+    s2_tile = s2_tiles[0]['path']
     
-    for key in common_keys:
+    for f in flood_tiles:
         matched.append({
-            's1': s1_dict[key]['path'],
-            's2': s2_dict[key]['path'],
-            'flood': flood_dict[key]['path'],
-            'tile_key': key
+            's1': s1_tile,
+            's2': s2_tile,
+            'flood': f['path'],
+            'tile_key': f['path'].replace('flood_', '').replace('.tif', '')
         })
     
     return matched
@@ -109,6 +106,13 @@ def create_splits(matched_samples, train_ratio=0.7, val_ratio=0.15, test_ratio=0
     n = len(matched_samples)
     indices = np.arange(n)
     
+    # Verificar si se puede estratificar (mínimo 2 muestras por clase)
+    if stratify_by is not None:
+        unique, counts = np.unique(stratify_by, return_counts=True)
+        if np.any(counts < 2):
+            print(f"[WARN] Estratificación no posible: algunas clases tienen <2 muestras. Usando split aleatorio.")
+            stratify_by = None
+    
     # Primera división: train vs (val+test)
     train_idx, temp_idx = train_test_split(
         indices, train_size=train_ratio, random_state=random_state, 
@@ -117,10 +121,16 @@ def create_splits(matched_samples, train_ratio=0.7, val_ratio=0.15, test_ratio=0
     
     # Segunda división: val vs test
     val_size = val_ratio / (val_ratio + test_ratio)
-    val_idx, test_idx = train_test_split(
-        temp_idx, train_size=val_size, random_state=random_state,
-        stratify=stratify_by[temp_idx] if stratify_by is not None else None
-    )
+    if stratify_by is not None:
+        stratify_arr = np.array(stratify_by)
+        val_idx, test_idx = train_test_split(
+            temp_idx, train_size=val_size, random_state=random_state,
+            stratify=stratify_arr[temp_idx]
+        )
+    else:
+        val_idx, test_idx = train_test_split(
+            temp_idx, train_size=val_size, random_state=random_state
+        )
     
     return {
         'train': [matched_samples[i] for i in train_idx],
@@ -151,8 +161,11 @@ def main():
     print(f"Máscaras de inundación: {len(flood_files)}")
     
     all_flood_tiles = []
+    # Usar directorio separado para tiles de flood
+    flood_tiles_dir = os.path.join(PROCESSED_DIR, "flood_tiles")
+    os.makedirs(flood_tiles_dir, exist_ok=True)
     for f in flood_files:
-        tiles = extract_tiles(f, FLOOD_MASKS_DIR, "flood")
+        tiles = extract_tiles(f, flood_tiles_dir, "flood")
         all_flood_tiles.extend(tiles)
     
     print(f"Tiles de inundación extraídos: {len(all_flood_tiles)}")
@@ -176,6 +189,7 @@ def main():
     print(f"Tiles S1 extraídos: {len(all_s1_tiles)}")
     
     # 4. Emparejar
+    # Usar matching simplificado: cada flood mask con el S1/S2 tile disponible
     matched = match_s1_s2_tiles(all_s1_tiles, all_s2_tiles, all_flood_tiles)
     print(f"Samples emparejados (S1+S2+Flood): {len(matched)}")
     
