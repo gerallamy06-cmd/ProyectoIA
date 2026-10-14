@@ -11,7 +11,7 @@ import json
 # ============================================================
 # CONFIGURACIÓN - AJUSTAR ESTOS VALORES
 # ============================================================
-GEE_PROJECT_ID = "TU_PROJECT_ID_AQUI"  # CAMBIAR: tu Google Cloud Project ID
+GEE_PROJECT_ID = "skysensebarranquilla"  # Google Cloud Project ID
 AOI_PATH = "data/aoi/barranquilla_flood_aoi.geojson"
 START_DATE = "2020-01-01"
 END_DATE = "2025-12-31"
@@ -35,10 +35,14 @@ def load_aoi():
     """Cargar AOI desde GeoJSON"""
     with open(AOI_PATH) as f:
         aoi_json = json.load(f)
-    # Convertir a ee.Geometry
+    # Convertir a ee.Geometry usando FeatureCollection para múltiples polígonos
     features = aoi_json['features']
-    geometries = [ee.Geometry(f['geometry']) for f in features]
-    aoi_ee = ee.Geometry.MultiGeometry(geometries) if len(geometries) > 1 else geometries[0]
+    if len(features) == 1:
+        aoi_ee = ee.Geometry(features[0]['geometry'])
+    else:
+        # Crear FeatureCollection y obtener geometría combinada
+        fc = ee.FeatureCollection([ee.Feature(f) for f in features])
+        aoi_ee = fc.geometry()
     print(f"[OK] AOI cargado: {len(features)} features")
     return aoi_ee
 
@@ -69,12 +73,13 @@ def add_cloud_mask_s2(image):
     cloud_mask = qa.bitwiseAnd(1 << 10).eq(0).And(qa.bitwiseAnd(1 << 11).eq(0))
     return image.updateMask(cloud_mask).select(["B2", "B3", "B4", "B8", "B11", "B12"])
 
-def export_collection_to_drive(collection, prefix, aoi, scale=10, max_images=100):
-    """Exportar colección a Google Drive como GeoTIFFs"""
-    # Obtener lista de imágenes (limitado para evitar timeout)
-    img_list = collection.toList(max_images)
+def export_collection_to_drive(collection, prefix, aoi, scale=10, max_images=20):
+    """Exportar colección a Google Drive como GeoTIFFs (limitado a max_images más recientes)"""
+    # Ordenar por fecha descendente (más recientes primero) y limitar
+    collection_sorted = collection.sort('system:time_start', False)
+    img_list = collection_sorted.toList(max_images)
     count = img_list.size().getInfo()
-    print(f"  Imágenes a exportar: {min(count, max_images)}")
+    print(f"  Imágenes a exportar (últimas {max_images}): {min(count, max_images)}")
     
     for i in range(min(count, max_images)):
         img = ee.Image(img_list.get(i))

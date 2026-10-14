@@ -3,8 +3,8 @@
 project:
   name: "SkySense-Flood-Barranquilla"
   description: "Detección de cambios en inundaciones barrios Don Juan y El Salado 2020-2025"
-  author: "[Tu Nombre]"
-  email: "[tu.email@uninorte.edu.co]"
+  author: "Geraldyne Lamy Correcha"
+  email: "gerallamy06@gmail.com"
   github: "https://github.com/gerallamy06-cmd/ProyectoIA"
 
 # Área de Interés (AOI)
@@ -32,7 +32,7 @@ temporal:
 
 # Google Earth Engine
 gee:
-  project_id: "TU_GEE_PROJECT_ID_AQUI"  # CAMBIAR: Tu Google Cloud Project ID
+  project_id: "skysensebarranquilla"  # Google Cloud Project ID
   cloud_threshold: 30  # % nubes máximo S2
   export_scale: 10  # metros
   export_crs: "EPSG:4326"

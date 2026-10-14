@@ -20,9 +20,9 @@ Serie temporal de imágenes **Sentinel-1 (SAR, VV+VH)** y **Sentinel-2 (L2A, 6 b
 Diseñado para evaluación de foundation models de Earth Observation (SkySense++) en detección de cambios de inundación urbana tropical.
 
 ## Detalles del Dataset
-- **Curado por**: [Tu Nombre] - Universidad del Norte
+- **Curado por**: Geraldyne Lamy Correcha - Universidad del Norte
 - **Financiado por**: Proyecto académico - IA Aplicada al Territorio (Onceavo Semestre)
-- **Compartido por**: [Tu Nombre] / @gerallamy06-cmd
+- **Compartido por**: Geraldyne Lamy Correcha / @gerallamy06-cmd
 - **Licencia**: CC-BY-4.0 (datos derivados) / Datos fuente: Copernicus/ESA (abiertos)
 - **Idioma**: N/A (datos geoespaciales ráster)
 - **DOI**: Pendiente / Repositorio GitHub
@@ -169,7 +169,7 @@ Formato: `nombre_archivo clase` (clase=1 para inundación en 1-shot)
 ```
 
 ## Autores de la Dataset Card (Dataset Card Authors)
-- **Nombre**: [Tu Nombre Completo]
-- **Contacto**: [tu.email@uninorte.edu.co]
+- **Nombre**: Geraldyne Lamy Correcha
+- **Contacto**: gerallamy06@gmail.com
 - **Fecha**: 2025-10-14
 - **Versión**: 1.0

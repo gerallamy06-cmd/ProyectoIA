@@ -23,7 +23,7 @@ model_name: SkySense-Flood-Barranquilla
 Este modelo demuestra la capacidad de transferencia de un foundation model multi-modal (SAR + óptico + series temporales) a un contexto urbano costero tropical sin entrenamiento adicional específico del dominio.
 
 ## Detalles del Modelo
-- **Desarrollado por**: Investigadores de Wuhan University (modelo base SkySense++) / [Tu Nombre] (adaptación y evaluación Barranquilla)
+- **Desarrollado por**: Investigadores de Wuhan University (modelo base SkySense++) / Geraldyne Lamy Correcha (adaptación y evaluación Barranquilla)
 - **Fecha**: Octubre 2025
 - **Versión**: 1.0
 - **Tipo**: Foundation model multi-modal (ViT backbone SwinTransformerV2 + VisionTransformer para S1/S2) + cabeza de segmentación UPerHead
@@ -195,13 +195,13 @@ Este modelo demuestra la capacidad de transferencia de un foundation model multi
 ```
 
 ## Autores de la Model Card (Model Card Authors)
-- **Nombre**: [Tu Nombre Completo]
-- **Email**: [tu.email@uninorte.edu.co]
+- **Nombre**: Geraldyne Lamy Correcha
+- **Email**: gerallamy06@gmail.com
 - **Afiliación**: Universidad del Norte, Onceavo Semestre - IA Aplicada al Territorio
 - **GitHub**: @gerallamy06-cmd
 - **Fecha**: 2025-10-14
 - **Rol**: Adaptación de dominio, preparación datos, evaluación, documentación
 
 ## Contacto (Model Card Contact)
-- **Email**: [tu.email@uninorte.edu.co]
+- **Email**: gerallamy06@gmail.com
 - **Issues**: https://github.com/gerallamy06-cmd/ProyectoIA/issues

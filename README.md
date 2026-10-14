@@ -104,8 +104,8 @@ pip install mmsegmentation==0.30.0 mmcls==0.25.0 timm==0.6.13
 - SkySense++ Repository: https://github.com/kang-wu/SkySensePlusPlus
 
 ## 👥 Autores
-- **[Tu Nombre Completo]** — Estudiante Onceavo Semestre, IA Aplicada al Territorio, Universidad del Norte
-- **Email**: [tu.email@uninorte.edu.co]
+- **Geraldyne Lamy Correcha** — Estudiante Onceavo Semestre, IA Aplicada al Territorio, Universidad del Norte
+- **Email**: gerallamy06@gmail.com
 - **GitHub**: [@gerallamy06-cmd](https://github.com/gerallamy06-cmd)
 
 ## 📄 Licencia
