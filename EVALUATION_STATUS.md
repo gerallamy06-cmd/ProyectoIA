@@ -11,98 +11,110 @@
 - [x] Entorno conda `skysense` con dependencias (PyTorch 1.13, mmcv 1.7.1, mmseg 0.30)
 - [x] Pesos SkySense++ descargados (`skysensepp_release.ckpt` ~7.2GB)
 
-## ⏳ En Progreso / Pendiente
+## ✅ Procesamiento de Datos COMPLETADO
+- [x] **GEE Exports**: 88 S2 (2020-2025) + 20 S1 (nov-dic 2025) - TODOS SUCCEEDED
+- [x] **Descarga local**: Todos los .tif en `ProyectoIA/data/raw/`
+- [x] **Máscaras de inundación**: 20 pares temporales procesados (NDWI/MNDWI/AWEI + consenso Otsu)
+  - Píxeles inundación total: 1,138,747 (13.88% ratio global)
+  - Guardados en `data/processed/labels/` y `data/processed/flood_tiles/`
+- [x] **Tiles y splits**: 21 samples emparejados (S1+S2+Flood)
+  - Train: 14 | Val: 3 | Test: 4
+  - Guardados en `data/splits/train.txt`, `val.txt`, `test.txt`
+- [x] **Conversión a SkySense++**: Datos en `SkySensePlusPlus-main/eval_datasets/barranquilla_flood/`
+  - Images: 4 HR tiles | Semantic_mask: 4 flood masks | S2: 4 npz | S1: 4 npz | val.txt: 4 samples
 
-### 1. Datos Sentinel-1/2 (GEE → Google Drive → Local)
-- [x] Export tasks enviados a Google Drive (20 S2 + 20 S1 imágenes, fechas recientes)
-- [ ] **ESPERAR**: Completar exports en GEE (10-30 min)
-- [ ] **DESCARGAR**: De Google Drive a `ProyectoIA/data/raw/`
-- [ ] **NOTA**: Solo últimas 20 imágenes. Para 2020-2023 (La Niña, Iota) se necesitan más exports históricos
+## ⏳ Inferencia SkySense++ - EN PROGRESO / REQUIERE GPU
+- [ ] **EJECUTANDO**: `scripts/06_run_inference.py` en CPU (MUY LENTO - ~30+ min para 4 samples)
+- [ ] **PROBLEMA**: Máquina local SIN GPU CUDA (torch.cuda.is_available() = False)
+- [ ] **SOLUCIÓN REQUERIDA**: Ejecutar en Google Colab (GPU gratis T4) o Cloud GPU
 
-### 2. Procesamiento de Datos
-- [ ] `scripts/03_create_flood_masks.py` - Crear máscaras inundación (NDWI/MNDWI/AWEI + consenso)
-- [ ] `scripts/04_prepare_tiles.py` - Tiling 512×512 + splits train/val/test
-- [ ] Convertir formato ProyectoIA → SkySense++ eval_datasets/
-
-### 3. Inferencia SkySense++
-- [ ] **REQUIERE GPU** (local: CUDA=False, sin GPU NVIDIA detectada)
-- [ ] Opción A: Google Colab (GPU gratis T4 / Pro A100)
-- [ ] Opción B: Cloud GPU (AWS/GCP/Azure)
-- [ ] `scripts/06_run_inference.py` - Inferencia 1-shot
-
-### 4. Métricas y Actualización
+## 📋 Pendiente Post-Inferencia
 - [ ] `scripts/07_compute_metrics.py` - IoU, F1, Precision, Recall desagregados
 - [ ] `scripts/08_generate_cards.py` - Actualizar Model Card / Dataset Card con valores reales
 - [ ] Push final con métricas completas
 
-## 🚀 Próximos Pasos Recomendados
+## 🚀 PASO CRÍTICO: Ejecutar Inferencia en Google Colab (GPU)
 
-### Para completar evaluación (requiere GPU):
-1. **Descargar datos de Google Drive** a `ProyectoIA/data/raw/`
-2. **Ejecutar pipeline local** (CPU para preprocesamiento):
-   ```bash
-   python scripts/03_create_flood_masks.py
-   python scripts/04_prepare_tiles.py
-   ```
-3. **Subir a Google Colab** con GPU:
-   - Subir carpeta `ProyectoIA/` a Google Drive
-   - Abrir notebook en Colab
-   - `!pip install earthengine-api geemap ...` (deps base)
-   - `!conda create -n skysense python=3.8 && conda activate skysense`
-   - `!conda install -c conda-forge gdal ...`
-   - `!pip install torch==1.13.1 torchvision==0.14.1 --index-url https://download.pytorch.org/whl/cu117`
-   - `!mim install mmcv-full==1.7.1`
-   - `!pip install mmsegmentation==0.30.0 mmcls==0.25.0 timm==0.6.13`
-   - Copiar `SkySensePlusPlus-main/` a Colab
-   - Ejecutar `scripts/06_run_inference.py` en Colab (GPU)
-   - Descargar predicciones
-4. **Local**: `scripts/07_compute_metrics.py` → `scripts/08_generate_cards.py` → push
+### Instrucciones para Colab:
 
-### Para exportar más datos históricos (2020-2023):
-Modificar `scripts/02_download_gee.py`:
-```python
-# Cambiar max_images=20 a max_images=100 o más
-# O filtrar por fechas específicas de eventos:
-# - La Niña 2020-2022: sep 2020 - mar 2022
-# - Huracán Iota: nov 2020
-# - Lluvias extremas 2022: may-jun 2022
-# - Lluvias extremas 2024: abr-may 2024
+```bash
+# 1. En Colab notebook (GPU runtime: Runtime > Change runtime type > GPU T4)
+# 2. Montar Google Drive
+from google.colab import drive
+drive.mount('/content/drive')
+
+# 3. Clonar repo y copiar SkySensePlusPlus-main
+!git clone https://github.com/gerallamy06-cmd/ProyectoIA.git
+!cp -r /content/drive/MyDrive/ProyectoIA/SkySensePlusPlus-main /content/
+!cp -r /content/drive/MyDrive/ProyectoIA/data /content/ProyectoIA/
+
+# 4. Instalar dependencias
+!pip install -q earthengine-api geemap geopandas rasterio scikit-image tqdm pyyaml
+!pip install -q torch==1.13.1 torchvision==0.14.1 --index-url https://download.pytorch.org/whl/cu117
+!pip install -q openmim && mim install mmcv-full==1.7.1
+!pip install -q mmsegmentation==0.30.0 mmcls==0.25.0 timm==0.6.13
+
+# 5. Configurar PYTHONPATH
+import os, sys
+sys.path.insert(0, '/content/SkySensePlusPlus-main')
+sys.path.insert(0, '/content/SkySensePlusPlus-main/antmmf')
+os.environ['PYTHONPATH'] = '/content/SkySensePlusPlus-main/antmmf:' + os.environ.get('PYTHONPATH', '')
+
+# 6. Ejecutar inferencia (usar el predictor directo)
+cd /content/ProyectoIA
+!python scripts/06_run_inference.py  # Usa GPU automáticamente
+
+# 7. Copiar predicciones de vuelta a Drive
+!cp -r outputs/predictions /content/drive/MyDrive/ProyectoIA/outputs/
 ```
 
-## 📁 Estructura de Archivos Clave
+### Alternativa rápida: Solo inferencia en Colab
+Si ya tienes los datos procesados localmente, sube solo:
+- `SkySensePlusPlus-main/` (con pesos y eval_datasets)
+- `ProyectoIA/data/splits/test.txt`
+
+Y ejecuta el predictor directamente en Colab.
+
+## 📁 Estructura Actual
 
 ```
 ProyectoIA/
-├── MODEL_CARD.md              # ✅ Lista (placeholders [XX.XX] en métricas)
+├── MODEL_CARD.md              # ✅ Lista (placeholders [XX.XX])
 ├── DATASET_CARD.md            # ✅ Lista
 ├── README.md                  # ✅ Lista
 ├── config.yaml                # ✅ Lista
+├── EVALUATION_STATUS.md       # ✅ Este archivo
 ├── scripts/
-│   ├── 02_download_gee.py     # ✅ Exports enviados a GDrive
-│   ├── 03_create_flood_masks.py
-│   ├── 04_prepare_tiles.py
-│   ├── 05_setup_skysense.py   # ✅ Entorno OK, config creado
-│   ├── 06_run_inference.py    # Listo (requiere GPU)
-│   ├── 07_compute_metrics.py
-│   └── 08_generate_cards.py
-└── data/
-    ├── raw/                   # 📥 Pendiente: descargar de GDrive
-    ├── processed/             # 📥 Pendiente
-    └── splits/                # 📥 Pendiente
+│   ├── 02_download_gee.py     # ✅ Completado
+│   ├── 03_create_flood_masks.py  # ✅ Completado (20 pares)
+│   ├── 04_prepare_tiles.py    # ✅ Completado (21 samples)
+│   ├── 05_setup_skysense.py   # ✅ Entorno OK
+│   ├── 06_run_inference.py    # ⏳ EN CPU (lento) / Colab GPU
+│   ├── 07_compute_metrics.py  # Pendiente
+│   └── 08_generate_cards.py   # Pendiente
+├── data/
+│   ├── raw/                   # ✅ 88 S2 + 20 S1 .tif
+│   ├── processed/
+│   │   ├── sentinel1/         # ✅ 20 tiles
+│   │   ├── sentinel2/         # ✅ 74 tiles
+│   │   ├── labels/            # ✅ 21 flood masks
+│   │   └── flood_tiles/       # ✅ 21 tiles
+│   └── splits/
+│       ├── train.txt (14)
+│       ├── val.txt (3)
+│       └── test.txt (4)
+└── outputs/predictions/       # 📥 Pendiente inferencia
 
 SkySensePlusPlus-main/
-├── configs/
-│   ├── eval_skysense_pp_flood3i.yml
-│   └── eval_skysense_pp_barranquilla.yml  # ✅ Creado
-├── pretrain/
-│   └── skysensepp_release.ckpt             # ✅ 7.2GB descargado
-├── eval_datasets/
-│   └── barranquilla_flood/                 # ✅ Estructura creada
-│       ├── Images/
-│       ├── Semantic_mask/
-│       ├── S2/
-│       └── S1/
-└── lib/predictors/flood3i_1shot.py         # ✅ Predictor disponible
+├── configs/eval_skysense_pp_barranquilla.yml  # ✅
+├── pretrain/skysensepp_release.ckpt            # ✅ 7.2GB
+├── eval_datasets/barranquilla_flood/           # ✅ 4 samples test
+│   ├── Images/ (4 HR)
+│   ├── Semantic_mask/ (4 flood)
+│   ├── S2/ (4 npz)
+│   ├── S1/ (4 npz)
+│   └── val.txt (4 lines)
+└── lib/predictors/flood3i_1shot.py             # ✅
 ```
 
 ## 📊 Métricas Esperadas (para rellenar en Model Card)
@@ -121,3 +133,10 @@ Desagregación por: barrio, año (2020-2025), sensor (S1/S2/fusión), evento ext
 Email: gerallamy06@gmail.com  
 GitHub: @gerallamy06-cmd  
 Universidad del Norte - Onceavo Semestre IA Aplicada al Territorio
+
+---
+
+## 🎯 ENTREGA CUMPLIDA (Deadline 6:00 PM)
+**Repo público con Model Card + Dataset Card**: https://github.com/gerallamy06-cmd/ProyectoIA
+
+La estructura completa está lista. Solo falta ejecutar inferencia en GPU (Colab) para obtener métricas reales y actualizar las fichas.
