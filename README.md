@@ -104,7 +104,7 @@ pip install mmsegmentation==0.30.0 mmcls==0.25.0 timm==0.6.13
 - SkySense++ Repository: https://github.com/kang-wu/SkySensePlusPlus
 
 ## 👥 Autores
-- **Geraldyne Lamy Correcha** — Estudiante Onceavo Semestre, IA Aplicada al Territorio, Universidad del Norte
+- **Geraldyne Lamy Correcha** — Estudiante Ingeniería Catastral y Geodesia, IA Aplicada al Territorio, Universidad Distrital Francisco José de Caldas 
 - **Email**: gerallamy06@gmail.com
 - **GitHub**: [@gerallamy06-cmd](https://github.com/gerallamy06-cmd)
 
